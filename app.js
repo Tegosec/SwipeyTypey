@@ -3,6 +3,8 @@ const selectionElement = document.getElementById('selection');
 const addWordBtn = document.getElementById('addWordBtn');
 const deleteWordBtn = document.getElementById('deleteWordBtn');
 
+// Initialize Hammer.js for swipe gestures
+const hammer = new Hammer(document.body);
 let sentence = '';
 
 // Sample words for selection
@@ -28,13 +30,13 @@ function renderSelection() {
     });
 }
 
-// Add word to sentence
-addWordBtn.addEventListener('click', () => {
+// Handle swipe right event
+hammer.on('swiperight', function() {
     // Functionality to add word from selection to sentence
 });
 
-// Delete word from sentence
-deleteWordBtn.addEventListener('click', () => {
+// Handle swipe left event
+hammer.on('swipeleft', function() {
     // Functionality to delete word from sentence
 });
 
