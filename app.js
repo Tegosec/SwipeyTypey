@@ -1,16 +1,12 @@
 const sentenceElement = document.getElementById('sentence');
 const selectionElement = document.getElementById('selection');
+const selectionBox = document.getElementById('selectionBox');
 const hammer = new Hammer(selectionElement);
 
 let sentence = '';
-const dictionary = ['Hello', 'World', 'This', 'is', 'SwipeyTypey'];
-const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+const dictionary = ['hello', 'world', 'this', 'is', 'SwipeyTypey'];
+const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '(space)'];
 const punctuation = ['.', ',', '\'', '!', '?', '£'];
-
-function sortDictionary() {
-        // Function to sort word list alphabetically
-        return dictionary;  // Just for now
-}
 
 function renderSentence() {
         sentenceElement.textContent = sentence;
@@ -18,8 +14,7 @@ function renderSentence() {
 
 function renderSelectionDictionary() {
         selectionElement.innerHTML = '';
-        const sortedDictionary = sortDictionary();
-        sortedDictionary.forEach(word => {
+        dictionary.sort((a, b) => a.localeCompare(b, undefined, {sensitivity: 'base'})).forEach(word => {
                 const wordBtn = document.createElement('li');
                 wordBtn.textContent = word;
                 selectionElement.appendChild(wordBtn);
@@ -48,7 +43,11 @@ function renderSelectionPunctuation(symbol, index) {
 }
 
 hammer.on('swiperight', function () {
-        sentence += selectionElement.value + ' ';
+        const boxRect = selectionBox.getBoundingClientRect();
+        const elements = document.elementsFromPoint(boxRect.x+5, boxRect.y+5);
+        if(elements[1].dataset.trimBefore) sentence = sentence.trim();
+        sentence += elements[1].textContent;
+        if(!elements[1].dataset.trimAfter) sentence += ' ';
         renderSentence();
 });
 

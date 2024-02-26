@@ -11,7 +11,7 @@
     position: relative;
 }
 
-#selectionContainer div {
+#selectionBox {
     position:absolute;
     top:10rem;
     border: 3px solid darkred;
