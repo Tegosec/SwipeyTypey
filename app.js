@@ -9,6 +9,7 @@ const punctuation = ['.', ',', '\'', '!', '?', '£'];
 
 function sortDictionary() {
         // Function to sort word list alphabetically
+        return dictionary;  // Just for now
 }
 
 function renderSentence() {
