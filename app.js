@@ -23,11 +23,7 @@ function renderSelectionDictionary() {
                 wordBtn.textContent = word;
                 selectionElement.appendChild(wordBtn);
         });
-        punctuation.forEach(symbol => {
-                const wordBtn = document.createElement('li');
-                wordBtn.textContent = symbol;
-                selectionElement.appendChild(wordBtn);
-        });
+        punctuation.forEach(renderSelectionPunctuation);
 }
 
 function renderSelectionAlphabet() {
