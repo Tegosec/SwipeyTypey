@@ -45,17 +45,18 @@ hammer.on('pandown', function() {
 });
 
 hammer.on('panup', function() {
-if(!blockGesture) {
-	if (wordIndex != words.length-1) {
-		wordIndex++;
-	} else {
-		wordIndex = 0;
-	}
-		renderSelection();
-		blockGesture = true;
-		setTimeout(function(){
-			blockGesture = false;
-		}, blockDelay);
+    if(!blockGesture) {
+	    if (wordIndex != words.length-1) {
+		    wordIndex++;
+	    } else {
+	    	wordIndex = 0;
+    	}
+    		renderSelection();
+	     	blockGesture = true;
+	    	setTimeout(function(){
+		    	blockGesture = false;
+		 
+			}, blockDelay);
 	}
 });
 
