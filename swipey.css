@@ -1,0 +1,13 @@
+#selection {
+    height:10rem;
+    width:100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 4rem 0;
+}
+
+#selection li {
+    height:2rem;
+    width:100%;
+    margin:0 10px;
+}
