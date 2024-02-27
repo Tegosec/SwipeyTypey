@@ -4,9 +4,9 @@ const selectionBox = document.getElementById('selectionBox');
 const hammer = new Hammer(selectionElement);
 
 let sentence = '';
-const dictionary = ['hello', 'world', 'this', 'is', 'SwipeyTypey'];
-const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '(space)'];
-const punctuation = ['.', ',', '\'', '!', '?', '£'];
+const dictionary = ['I', 'me', 'you', 'nurse', 'doctor', 'mum', 'dad', 'is', 'are', 'do', 'bed', 'tissue', 'mouth', 'head', 'leg', 'foot', 'arm', 'neck', 'eye', 'left', 'right', 'hurt', 'pain', 'itch', 'toilet', 'nose', 'can', 'my', 'drink', 'juice', 'food', 'feels', 'cold', 'in', 'hot', 'want', 'need', 'a', 'please', 'hand', 'finger', 'thirsty', 'hungry', 'chocolate', 'phone', 'charger', 'teddy', 'Cheddar', 'chest', 'wet', 'hair', 'brush', 'teeth'];
+const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+const punctuation = [['Space',' '],['Full Stop', '.'],['Comma', ','],['Apostraphe', '\''],['Exclamation Mark', '!'],['Question Mark', '?'], ['Pound Sign', '£']];
 
 function renderSentence() {
         sentenceElement.textContent = sentence;
@@ -27,6 +27,7 @@ function renderSelectionAlphabet() {
         alphabet.forEach(letter => {
                 const wordBtn = document.createElement('li');
                 wordBtn.textContent = letter;
+                wordBtn.dataset.trimAfter = true;
                 selectionElement.appendChild(wordBtn);
         });
         punctuation.forEach(renderSelectionPunctuation);
@@ -34,10 +35,11 @@ function renderSelectionAlphabet() {
 
 function renderSelectionPunctuation(symbol, index) {
         const wordBtn = document.createElement('li');
-        wordBtn.textContent = symbol;
-        if(index < 5) 
+        wordBtn.textContent = '(' + symbol[0] + ')';
+        wordBtn.dataset.trueVal = symbol[1];
+        if(index < 6) 
                 wordBtn.dataset.trimBefore = true; // Remove spacing preceding this punctuation mark
-        if(index === 2 || index === 5) 
+        if(index === 3 || index === 6) 
                 wordBtn.dataset.trimAfter = true; // Remove spacing following this punctuation mark
         selectionElement.appendChild(wordBtn);
 }
@@ -46,7 +48,7 @@ hammer.on('swiperight', function () {
         const boxRect = selectionBox.getBoundingClientRect();
         const elements = document.elementsFromPoint(boxRect.x+5, boxRect.y+5);
         if(elements[1].dataset.trimBefore) sentence = sentence.trim();
-        sentence += elements[1].textContent;
+        sentence += elements[1].dataset.trueVal || elements[1].textContent;
         if(!elements[1].dataset.trimAfter) sentence += ' ';
         renderSentence();
 });
