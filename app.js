@@ -1,10 +1,13 @@
 const sentenceElement = document.getElementById('sentence');
 const selectionElement = document.getElementById('selection');
 const selectionBox = document.getElementById('selectionBox');
-const hammer = new Hammer(selectionElement);
+const hContainer = new Hammer(document.getElementById('selectionContainer'));
+const hSentence = new Hammer(sentenceElement);
+const hSelection = new Hammer(selectionElement);
 
 let sentence = '';
-const dictionary = ['I', 'me', 'you', 'nurse', 'doctor', 'mum', 'dad', 'is', 'are', 'do', 'bed', 'tissue', 'mouth', 'head', 'leg', 'foot', 'arm', 'neck', 'eye', 'left', 'right', 'hurt', 'pain', 'itch', 'toilet', 'nose', 'can', 'my', 'drink', 'juice', 'food', 'feels', 'cold', 'in', 'hot', 'want', 'need', 'a', 'please', 'hand', 'finger', 'thirsty', 'hungry', 'chocolate', 'phone', 'charger', 'teddy', 'Cheddar', 'chest', 'wet', 'hair', 'brush', 'teeth'];
+let insertHistory = [];
+const dictionary = ['I', 'me', 'you', 'nurse', 'doctor', 'mum', 'dad', 'is', 'are', 'do', 'bed', 'tissue', 'mouth', 'head', 'leg', 'foot', 'arm', 'neck', 'eye', 'left', 'right', 'hurt', 'pain', 'itch', 'toilet', 'nose', 'can', 'my', 'drink', 'juice', 'food', 'feels', 'cold', 'in', 'hot', 'want', 'need', 'a', 'please', 'hand', 'finger', 'thirsty', 'hungry', 'chocolate', 'phone', 'charger', 'teddy', 'Cheddar', 'chest', 'wet', 'hair', 'brush', 'teeth', 'ask', 'tell', 'speak', 'to', 'the'];
 const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const punctuation = [['Space',' '],['Full Stop', '.'],['Comma', ','],['Apostraphe', '\''],['Exclamation Mark', '!'],['Question Mark', '?'], ['Pound Sign', '£']];
 
@@ -44,21 +47,35 @@ function renderSelectionPunctuation(symbol, index) {
         selectionElement.appendChild(wordBtn);
 }
 
-hammer.on('swiperight', function () {
+//hSelection.on('swiperight', insertSelection);
+hContainer.on('swiperight', insertSelection);
+hSentence.on('swiperight', copyToClipboard);
+//hSelection.on('swipeleft', undo);
+hContainer.on('swipeleft', undo);
+
+
+function insertSelection() {
         const boxRect = selectionBox.getBoundingClientRect();
         const elements = document.elementsFromPoint(boxRect.x+5, boxRect.y+5);
         if(elements[1].dataset.trimBefore) sentence = sentence.trim();
+        insertHistory.push(sentence.length);
         sentence += elements[1].dataset.trueVal || elements[1].textContent;
         if(!elements[1].dataset.trimAfter) sentence += ' ';
         renderSentence();
-});
+}
 
-hammer.on('swipeleft', function () {
-        if (sentence.length > 1) {
-                sentence = sentence.slice(0, sentence.trim().lastIndexOf(' ')+1);
+function undo() {
+        if (insertHistory.length) {
+                sentence = sentence.slice(0, insertHistory.pop());
                 renderSentence();
         }
-});
+}
+
+function copyToClipboard() {
+        navigator.clipboard.writeText(sentence);
+        sentenceElement.classList.add('clipped');
+        window.setTimeout(() => {sentenceElement.classList.remove('clipped');}, 300);
+}
 
 renderSentence();
 renderSelectionDictionary();

@@ -29,3 +29,12 @@
     border-radius: 6px;
     padding:0.5rem 2rem;
 }
+
+#sentence {
+    transition: background-color 0.3s;
+    background-color: inherit;
+}
+
+#sentence.clipped {
+    background-color: #99f999;
+}
