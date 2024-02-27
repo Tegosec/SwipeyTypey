@@ -12,3 +12,8 @@ Contributions to SwipeyTypey are welcome and encouraged! Your input can help imp
 
 ## Support
 For any questions, feedback, or support issues, please submit an issue on GitHub. We're here to help!
+
+## Donations
+This software is released free of charge with the MIT licence allowing you to use, modify or distribute the source code as you please. However if you appreciate the work being done or find value in SwipeyTypey, donations are readily accepted!
+
+Buy us a beer at [ko-fi.com](Ko-fi.com/tegosec)
