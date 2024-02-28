@@ -1,9 +1,13 @@
+:root {
+    --list-item-height: 4rem;
+}
+
 #selection {
-    height:20rem;
+    height:calc(var(--list-item-height) * 5);
     width:100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 11.5rem 0;
+    padding: calc(var(--list-item-height) * 2) 0;
     scroll-snap-type: y mandatory;
 }
 
@@ -13,15 +17,15 @@
 
 #selectionBox {
     position:absolute;
-    top:10rem;
+    top:calc(var(--list-item-height) * 2);
     border: 3px solid darkred;
     width:calc(100% - 1.5rem);
-    height:3rem;
+    height:var(--list-item-height);
     margin: 0 0.5rem;
 }
 
 #selection li {
-    height:3rem;
+    height:var(--list-item-height);
     width:100%;
     margin:6px 10px;
     scroll-snap-align: center;
